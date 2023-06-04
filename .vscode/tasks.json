@@ -1,0 +1,47 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cargo",
+			"command": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "rust: cargo build"
+		},
+		{
+			"type": "cargo",
+			"command": "fmt",
+			"label": "rust: cargo fmt"
+		},
+		{
+			"type": "cargo",
+			"command": "check",
+			"label": "rust: cargo check"
+		},
+		{
+			"type": "cargo",
+			"command": "run",
+			"label": "rust: cargo run"
+		},
+		{
+			"type": "shell",
+			"command": "docker run -d --name postgres -e POSTGRES_PASSWORD=pgpass -p 5432:5432 postgres",
+			"label": "start postgres",
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"command": "DATABASE_URL=postgresql://postgres:pgpass@localhost:5432/test_db sea-orm-cli migrate refresh",
+			"label": "run migrations",
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"command": "sea-orm-cli generate entity -u postgresql://postgres:pgpass@localhost:5432/test_db -o src/entities",
+			"label": "generate entities",
+			"problemMatcher": []
+		}
+	]
+}
